@@ -1,0 +1,96 @@
+#
+# NewFocus8732.db
+#
+record(stringin,"$(P)$(R)resp")
+{
+    field(DESC,"Generic command response")
+    field(DTYP,"stream")
+    field(VAL,"string")
+    field(INP,"@NewFocus8732.proto readResp $(PORT)")
+}
+
+record(ao,"$(P)$(R)freq")
+{
+    field(DESC,"Set frequency")
+    field(DTYP,"stream")
+    field(OUT,"@NewFocus8732.proto setFreq $(PORT)")
+    field(OMSL,"closed_loop")
+    field(OIF,"Full")
+    field(PREC,"3")
+    field(EGU,"volts")
+}
+
+record(longout,"$(P)$(R)steps")
+{
+    field(DESC,"Set steps")
+    field(DTYP,"stream")
+    field(OUT,"@NewFocus8732.proto setSteps $(PORT)")
+    field(OMSL,"closed_loop")
+    field(EGU,"units")
+}
+
+record(longout,"$(P)$(R)chan")
+{
+    field(DESC,"Set channel number")
+    field(DTYP,"stream")
+    field(OUT,"@NewFocus8732.proto setChan $(PORT)")
+    field(OMSL,"closed_loop")
+    field(EGU,"units")
+}
+
+record(bo,"$(P)$(R)dir")
+{
+    field(DESC,"Set direction")
+    field(DTYP,"stream")
+    field(OMSL,"closed_loop")
+    field(DOL,"0")
+    field(OUT,"@NewFocus8732.proto setDirection $(PORT)")
+    field(ZNAM,"CCW")
+    field(ONAM,"CW")
+}
+
+record(bo,"$(P)$(R)onoff")
+{
+    field(DESC,"Channel on/off")
+    field(DTYP,"stream")
+    field(OMSL,"closed_loop")
+    field(DOL,"1")
+    field(OUT,"@NewFocus8732.proto setOnOff $(PORT)")
+}
+
+#record(stringin,"$(P)$(R)mvstat")
+record(ai,"$(P)$(R)mvstat")
+{
+    field(DESC,"Move status")
+    field(DTYP,"stream")
+#    field(VAL,"string")
+    field(INP,"@NewFocus8732.proto readMStatus $(PORT)")
+}
+
+record(stringout,"$(P)$(R)cmd")
+{
+    field(DESC,"Generic Command")
+    field(DTYP,"stream")
+    field(FLNK,"$(P)$(R)resp.VAL")
+    field(VAL,"string")
+    field(OMSL,"supervisory")
+    field(OUT,"@NewFocus8732.proto setCmd $(PORT)")
+}
+
+record(bo,"$(P)$(R)reset")
+{
+    field(DESC,"Reset")
+    field(DTYP,"stream")
+    field(OMSL,"supervisory")
+    field(OUT,"@NewFocus8732.proto setReset $(PORT)")
+}
+
+# Also used as a keep-alive for using a ICS 8065
+record(stringin,"$(P)$(R)instr_id")
+{
+    field(DESC,"Instrument Identification")
+    field(DTYP,"stream")
+    field(INP,"@NewFocus8732.proto readID $(PORT)")
+    field(PINI,"YES")
+    field(SCAN, "Passive")
+}

@@ -1,0 +1,75 @@
+#
+# NewFocus8732.proto
+#
+
+Terminator = "\r";
+
+# Send Generic command (string) on X
+# Record: stringout
+setCmd {
+   out "%s";
+}
+
+# Read Generic Response (string) on X
+# Record: stringin
+readResp {
+   in "%s";
+}
+
+# Set Frequency
+# Record: ao
+setFreq {
+  out "@:SOUR:PULS:FREQ %.1f Hz";
+}
+
+# Set Number of Steps
+# Record: longout
+setSteps {
+  out "@:SOUR:PULS:COUN %d";
+}
+
+# Set Slot, Connector, Channel No.
+# Record: longout
+setChan {
+  out "@:INST:NSEL %d";
+}
+
+# Set Direction
+# Record: bo
+#   ZRST: CCW
+#   ONST: CW
+setDirection {
+  out "%{@:SOUR:DIR CCW|@:SOUR:DIR CW}";
+}
+
+# Set On/Off
+# Record: bo
+#   ZRST: OFF
+#   ONST: ON
+setOnOff {
+  out "%{@:INST:STAT 0|@:INST:STAT 1}";
+}
+
+# Read status of move from Picomotor Driver
+# Record: ai
+readMStatus {
+  out "@:INST:STAT?";
+  in  "%f";
+}
+
+
+# Reset
+# Record: bo
+setReset {
+  out "@*RST";
+}
+
+# Read ID
+# Record: stringin
+readID {
+  out "@*IDN?";
+  in  "%39c";
+}
+
+
+

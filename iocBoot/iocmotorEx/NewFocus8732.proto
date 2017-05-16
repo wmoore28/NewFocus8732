@@ -13,25 +13,56 @@ setCmd {
 # Read Generic Response (string) on X
 # Record: stringin
 readResp {
-   in "%s";
+   in "%#s";
 }
 
 # Set Frequency
 # Record: ao
 setFreq {
   out "@:SOUR:PULS:FREQ %.1f Hz";
+  in "OK";
+}
+
+# Get Frequency
+# Record: ai
+getFreq {
+  out "@:SOUR:PULS:FREQ?";
+  in "%f Hz";
+}
+
+# Set Period
+# Record: ao
+setPer {
+  out "@:SOUR:PULS:PER %f S";
+  in "OK";
+}
+
+# Get Period
+# Record: ai
+getPer {
+  out "@:SOUR:PULS:PER?";
+  in "%f S";
 }
 
 # Set Number of Steps
 # Record: longout
 setSteps {
   out "@:SOUR:PULS:COUN %d";
+  in "OK";
 }
 
 # Set Slot, Connector, Channel No.
 # Record: longout
 setChan {
   out "@:INST:NSEL %d";
+  in "OK";
+}
+
+# Get Slot, Connector, Channel No.
+# Record: longin
+getChan {
+  out "@:INST:NSEL?";
+  in "%d";
 }
 
 # Set Direction
@@ -40,6 +71,16 @@ setChan {
 #   ONST: CW
 setDirection {
   out "%{@:SOUR:DIR CCW|@:SOUR:DIR CW}";
+  in "OK";
+}
+
+# Get Direction
+# Record: bi
+#   ZRST: CCW
+#   ONST: CW
+getDirection {
+  out "@:SOUR:DIR?";
+  in "%{CCW|CW}";
 }
 
 # Set On/Off
@@ -57,7 +98,6 @@ readMStatus {
   in  "%f";
 }
 
-
 # Reset
 # Record: bo
 setReset {
@@ -69,6 +109,13 @@ setReset {
 readID {
   out "@*IDN?";
   in  "%39c";
+}
+
+# Operation complete status
+# Record: bi
+readOPC {
+  out "@*OPC?";
+  in  "%d";
 }
 
 

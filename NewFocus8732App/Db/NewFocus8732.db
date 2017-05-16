@@ -17,7 +17,38 @@ record(ao,"$(P)$(R)freq")
     field(OMSL,"closed_loop")
     field(OIF,"Full")
     field(PREC,"3")
-    field(EGU,"volts")
+    field(EGU,"Hz")
+}
+
+record(ai,"$(P)$(R)get_freq")
+{
+    field(DESC,"Get frequency")
+    field(DTYP,"stream")
+    field(INP,"@NewFocus8732.proto getFreq $(PORT)")
+    field(PREC,"3")
+    field(EGU,"Hz")
+    field(SCAN, "1 second")
+}
+
+record(ao,"$(P)$(R)period")
+{
+    field(DESC,"Set period")
+    field(DTYP,"stream")
+    field(OUT,"@NewFocus8732.proto setPer $(PORT)")
+    field(OMSL,"closed_loop")
+    field(OIF,"Full")
+    field(PREC,"4")
+    field(EGU,"s")
+}
+
+record(ai,"$(P)$(R)get_period")
+{
+    field(DESC,"Get period")
+    field(DTYP,"stream")
+    field(INP,"@NewFocus8732.proto getPer $(PORT)")
+    field(PREC,"4")
+    field(EGU,"s")
+    field(SCAN, "1 second")
 }
 
 record(longout,"$(P)$(R)steps")
@@ -38,6 +69,14 @@ record(longout,"$(P)$(R)chan")
     field(EGU,"units")
 }
 
+record(longin,"$(P)$(R)get_chan")
+{
+    field(DESC,"Get channel number")
+    field(DTYP,"stream")
+    field(INP,"@NewFocus8732.proto getChan $(PORT)")
+    field(SCAN, "1 second")
+}
+
 record(bo,"$(P)$(R)dir")
 {
     field(DESC,"Set direction")
@@ -47,6 +86,16 @@ record(bo,"$(P)$(R)dir")
     field(OUT,"@NewFocus8732.proto setDirection $(PORT)")
     field(ZNAM,"CCW")
     field(ONAM,"CW")
+}
+
+record(bi,"$(P)$(R)get_dir")
+{
+    field(DESC,"Get direction")
+    field(DTYP,"stream")
+    field(INP,"@NewFocus8732.proto getDirection $(PORT)")
+    field(ZNAM,"CCW")
+    field(ONAM,"CW")
+    field(SCAN,"1 second")
 }
 
 record(bo,"$(P)$(R)onoff")
@@ -65,6 +114,7 @@ record(ai,"$(P)$(R)mvstat")
     field(DTYP,"stream")
 #    field(VAL,"string")
     field(INP,"@NewFocus8732.proto readMStatus $(PORT)")
+    field(SCAN, "1 second")
 }
 
 record(stringout,"$(P)$(R)cmd")
@@ -94,3 +144,15 @@ record(stringin,"$(P)$(R)instr_id")
     field(PINI,"YES")
     field(SCAN, "Passive")
 }
+
+record(bi, "$(P)$(R)op_cmplt")
+{
+    field(DESC, "Operation complete")
+    field(DTYP, "stream")
+    field(INP,  "@NewFocus8732.proto readOPC $(PORT)")
+    field(PINI, "YES")
+    field(SCAN, ".1 second")
+    field(ZNAM, "In progress")
+    field(ONAM, "Complete")
+}
+
